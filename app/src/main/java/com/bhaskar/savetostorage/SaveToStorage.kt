@@ -15,12 +15,20 @@ class SaveToStorage (private val activity: Activity) {
         const val TAG = "SaveToStorage"
     }
     private var onSaveListener: OnSaveListener ? = null
+    private var onDeleteListener: OnDeleteListener ? = null
 
     /**
      * Registering to listener to get Save callbacks
      */
     fun addOnSaveListener(onSaveListener: OnSaveListener) {
         this.onSaveListener = onSaveListener
+    }
+
+    /**
+     * Registering to listener to get Delete task callbacks
+     */
+    fun addOnDeleteListener(onDeleteListener: OnDeleteListener) {
+        this.onDeleteListener = onDeleteListener
     }
 
     /**
@@ -52,6 +60,24 @@ class SaveToStorage (private val activity: Activity) {
         } catch (e: Exception) {
             onSaveListener?.onSaveFail(e)
             Log.d(TAG, "saveImageToStorage: ${e.message}")
+        }
+    }
+
+    /**
+     * Function to delete a file from storage
+     */
+    fun deleteFile (directoryName: String, fileName: String) {
+        val directory = setOutputDirectory(directoryName)
+        val targetFile = File(directory, fileName)
+        try {
+            if (targetFile.exists()) {
+                targetFile.delete()
+                onDeleteListener?.onFileDeleted()
+            } else {
+                onDeleteListener?.onFileNotFound()
+            }
+        } catch (e: Exception) {
+            onDeleteListener?.onDeleteException(e)
         }
     }
 }

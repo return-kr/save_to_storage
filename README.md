@@ -29,7 +29,7 @@ saveImageTask?.addOnSaveListener(object : OnSaveListener {
     }
 
     override fun onSaveFail(e: Exception) {
-        Log.d("saveImageTask", "onSaveFail: ")
+        Log.d("saveImageTask", "onSaveFail: ${e.message}")
     }
 })
 ```
@@ -40,5 +40,28 @@ saveImageTask?.saveImageToStorage(
     imageBitmap = myLogo, 
     directoryName = "MyTestDirectory"
 )
+```
+### Call the function to delete a file by providing directory and filename. ###
+```kotlin
+saveImageTask?.deleteFile(
+    fileName = "test_image.png",
+    directoryName = "MyTestDirectory"
+)
+```
+### Set the listener to get the delete task callbacks. ###
+```kotlin
+saveImageTask?.addOnDeleteListener(object : OnDeleteListener {
+    override fun onFileDeleted() {
+        Log.d("deleteTask", "onFileDeleted: ")
+    }
+    
+    override fun onFileNotFound() {
+        Log.d("deleteTask", "onFileNotFound: ")
+    }
+
+    override fun onDeleteException(e: Exception) {
+        Log.d("deleteTask", "onDeleteException: ${e.message}")
+    }
+})
 ```
 ***End of Doc***
