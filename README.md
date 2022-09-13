@@ -1,4 +1,4 @@
-# The library saves a file on the Internal Storage #
+# The library saves a file on the Internal Storage and Delete a file also #
 ## Use of the library ##
 ### Add library dependency to the app level build.gradle file. ###
 
