@@ -67,7 +67,9 @@ class SaveToStorage (private val activity: Activity) {
      * Function to delete a file from storage
      */
     fun deleteFile (directoryName: String, fileName: String) {
-        val directory = setOutputDirectory(directoryName)
+        val directory = activity.externalMediaDirs.firstOrNull()?.let {
+            File(it, directoryName).apply { mkdirs() }
+        }
         val targetFile = File(directory, fileName)
         try {
             if (targetFile.exists()) {

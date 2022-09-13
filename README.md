@@ -33,20 +33,24 @@ saveImageTask?.addOnSaveListener(object : OnSaveListener {
     }
 })
 ```
-### Call the function to save the file by providing details on parameter. ###
+### Call the function inside a coroutine on background dispatcher to save the file by providing details on parameter. ###
 ```kotlin
-saveImageTask?.saveImageToStorage(
-    fileName = "test_image.png", 
-    imageBitmap = myLogo, 
-    directoryName = "MyTestDirectory"
-)
+lifecycleScope.launch(Dispatchers.IO) {
+    saveImageTask?.saveImageToStorage(
+        fileName = "test_image.png",
+        imageBitmap = myLogo,
+        directoryName = "MyTestDirectory"
+    )
+}
 ```
-### Call the function to delete a file by providing directory and filename. ###
+### Call the function inside a coroutine on background dispatcher to delete a file by providing directory and filename. ###
 ```kotlin
-saveImageTask?.deleteFile(
-    fileName = "test_image.png",
-    directoryName = "MyTestDirectory"
-)
+lifecycleScope.launch(Dispatchers.IO) {
+    saveImageTask?.deleteFile(
+        fileName = "test_image.png",
+        directoryName = "MyTestDirectory"
+    )
+}
 ```
 ### Set the listener to get the delete task callbacks. ###
 ```kotlin
